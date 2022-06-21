@@ -14,9 +14,11 @@
 }
 
 /* resets */
-body {
+* {
 	padding: 0;
 	margin: 0;
+}
+body {
 	font-family: 'Source Sans Pro', sans-serif;
 }
 a:link, a:visited {
@@ -151,7 +153,7 @@ button {
 
 .repository-controls {
 	display: flex;
-	gap: .25rem;
+	gap: .5rem;
 	align-items: baseline;
 	color: #c0c0c0;
 }
@@ -165,6 +167,9 @@ button {
 	color: #000000;
 }
 .repository-controls__popup {
+	display: flex;
+	gap: .5rem;
+	align-items: baseline;
 	border-radius: .2em;
 	padding: .1em .2em;
 }
