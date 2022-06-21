@@ -1,0 +1,190 @@
+/* fonts */
+@font-face {
+	font-family: 'Source Sans Pro';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Source Sans Pro'), url('/fonts/SourceSansPro-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Font Awesome 6 Free';
+	font-style: normal;
+	font-weight: 900;
+	font-display: block;
+	src: url('/fonts/fa-solid-900.woff2') format('woff2');
+}
+
+/* resets */
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+a:link, a:visited {
+	color: inherit;
+	text-decoration: none;
+}
+a:hover, a:active {
+	color: inherit;
+	text-decoration: underline;
+}
+button {
+	color: inherit;
+}
+
+/* global */
+.icon {
+	width: 1em;
+	height: 1em;
+}
+
+/* log */
+.log {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+}
+
+.log__item {
+	list-style: none;
+	margin: 0;
+	padding: .2em;
+	display: flex;
+	gap: .2em;
+	align-items: baseline;
+}
+.log__item_success {
+	background-color: rgb(255, 243, 205);
+}
+.log__item_failure {
+	background-color: rgb(241, 174, 181);
+}
+
+/* global buttons */
+.global-controls {
+	position: fixed;
+	right: .5rem;
+	bottom: .5rem;
+	display: flex;
+	gap: .5rem;
+}
+
+.global-button {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: rgb(13, 110, 253); /*rgb(51, 144, 236)*/
+	color: white;
+	cursor: pointer;
+	border: 0;
+	font-size: 1.5rem;
+	box-shadow: 0 .2rem .4rem #00000028, 0 .2rem .4rem #0000003a;
+}
+
+/* repositories listing */
+.repositories {
+	display: grid;
+	grid-template-columns: auto;
+	gap: .5rem .5rem;
+	padding: .5rem;
+}
+
+@media only screen and (min-width: 1024px) {
+	.repositories {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+/* repository item */
+.repository {
+	border: 1px solid #c0c0c0;
+	box-sizing: border-box;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	border-left: 10px solid #c0c0c0;
+	box-shadow: 0 .1rem .2rem #0000001e, 0 .1rem .2rem #0000003c;
+}
+
+.repository_success {
+	border: 1px solid #39aa56;
+	border-left: 10px solid #39aa56;
+}
+.repository_failure {
+	border: 1px solid #db4545;
+	border-left: 10px solid #db4545;
+}
+.repository_inprogress {
+	border: 1px solid #edde3f;
+	border-left: 10px solid #edde3f;
+}
+
+.repository__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.repository__title {
+	margin: 0;
+	font-weight: normal;
+	font-size: 1.6rem;
+}
+.repository__title_success {
+	color: #39aa56;
+}
+.repository__title_failure {
+	color: #db4545;
+}
+.repository__title_inprogress {
+	color: #edde3f;
+}
+
+.repository-controls {
+	display: flex;
+	gap: .25rem;
+	align-items: baseline;
+	color: #c0c0c0;
+}
+.repository-controls__button {
+	background-color: inherit;
+	border: none;
+	font-size: 1.2rem;
+	cursor: pointer;
+}
+.repository-controls__button:hover {
+	color: #000000;
+}
+.repository-controls__popup {
+	border-radius: .2em;
+	padding: .1em .2em;
+}
+.repository-controls__popup_danger {
+	background-color: #db4545;
+	color: white;
+	font-weight: bold;
+}
+
+.repository-details {
+	font-size: 85%;
+	display: grid;
+	gap: .5rem;
+	color: #666666;
+}
+.repository-details_main {
+	grid-template-columns: 3fr 2fr 2fr;
+}
+.repository-details__item {
+	text-align: center;
+}
+.repository-details__item:last-child {
+	text-align: right;
+}
+.repository-details__item:first-child {
+	text-align: left;
+}
+
+/* messages log */
+.error { background-color: #ffc0c0; }
+.success { background-color: #c0ffc0; }
