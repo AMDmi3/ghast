@@ -146,6 +146,7 @@ input, textarea {
 	gap: 0.5rem;
 	border-left: 10px solid #c0c0c0;
 	box-shadow: 0 .1rem .2rem #0000001e, 0 .1rem .2rem #0000003c;
+	overflow: hidden;
 }
 
 .repository_success {
