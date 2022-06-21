@@ -400,7 +400,7 @@ const GhastApp = {
 		}
 	},
 	beforeMount() {
-		this.debug = !!localStorage.getItem('debug');
+		this.debug = localStorage.getItem('debug') === 'true';
 
 		let hadErrors = false;
 		try {
