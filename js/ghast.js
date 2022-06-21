@@ -335,7 +335,7 @@ const GhastApp = {
 					let new_status = {
 						branch: run.head_branch,
 						commitHash: run.head_commit.id,
-						commitMessage: run.head_commit.message,
+						commitMessage: run.head_commit.message.split('\n')[0],
 						commitDate: new Date(run.head_commit.timestamp),
 						commitAuthor: run.head_commit.author.name,
 						runCreatedDate: new Date(run.created_at),
