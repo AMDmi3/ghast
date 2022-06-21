@@ -32,6 +32,9 @@ a:hover, a:active {
 button {
 	color: inherit;
 }
+input, textarea {
+	font-size: 1rem;
+}
 @media only screen and (max-width: 1024px) {
 	html {
 		font-size: 200%;
@@ -89,6 +92,34 @@ button {
 }
 @media only screen and (max-width: 1024px) {
 	.global-button { width: 5rem; height: 5rem; }
+}
+
+/* form */
+.vertical-form {
+	display: flex;
+	flex-direction: column;
+	gap: .5rem .5rem;
+	padding: .5rem;
+}
+
+.form-button {
+	height: 3rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	border: 0;
+	font-size: 1.5rem;
+	box-shadow: 0 .2rem .4rem #00000028, 0 .2rem .4rem #0000003a;
+}
+.form-button_primary {
+	background-color: rgb(13, 110, 253);
+	color: white;
+}
+.form-button_secondary {
+	background-color: rgb(108, 117, 125);
+	color: white;
+}
+@media only screen and (max-width: 1024px) {
+	.form { height: 5rem; }
 }
 
 /* repositories listing */

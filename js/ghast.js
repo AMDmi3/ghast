@@ -233,19 +233,18 @@ const NewRepositoryFormComponent = {
 	data() {
 		return {
 			form: {
-				name: '',
+				names: '',
 			}
 		}
 	},
 	emits: ['add', 'cancel'],
 	template: `
-		<div>
-			<form>
-				<input type="text" id="name" v-model="form.name">
-				<button type="submit" @click="$emit('add', form)">Add</button>
-				<button type="reset" @click="$emit('cancel')">Cancel</button>
-			</form>
-		</div>
+		<form class="vertical-form">
+			<label for="names">Repositories list in <code>User/Repo</code> form, separated by any whitespace</label>
+			<textarea id="names" name="names" v-model="form.names" rows="10"></textarea>
+			<button class="form-button form-button_primary" type="submit" @click="$emit('add', form.names)">Add</button>
+			<button class="form-button form-button_secondary" type="reset" @click="$emit('cancel')">Cancel</button>
+		</form>
 	`,
 };
 
@@ -266,16 +265,21 @@ const GhastApp = {
 		Log: LogComponent,
 	},
 	methods: {
-		addRepository(repository) {
-			if (repository.name in this.repositoriesByName) {
-				this.addMessage('Repository already exists', 'error');
-			} else {
-				this.repositories.push(repository);
-				this.repositoriesByName[repository.name] = repository;
-				this.scheduleNextRepositoryUpdate(repository);
-				this.saveState();
-				this.addMessage('Repository added', 'success');
-			}
+		addRepositories(names) {
+			names.split(/\s+/).forEach((name) => {
+				if (name in this.repositoriesByName) {
+					this.addMessage('Repository ' + name + ' already exists', 'error');
+				} else {
+					let repository = {
+						name: name
+					}
+					this.repositories.push(repository);
+					this.repositoriesByName[repository.name] = repository;
+					this.scheduleNextRepositoryUpdate(repository);
+					this.saveState();
+					this.addMessage('Repository ' + name + ' added', 'success');
+				}
+			});
 		},
 		addMessage(text, type) {
 			let id = this.nextMessageId++;
@@ -450,10 +454,10 @@ const GhastApp = {
 		/>
 		<NewRepositoryForm
 			v-if="page === $Page.newrepo"
-			@add="(repository) => {addRepository(repository); page = $Page.listing}"
+			@add="(names) => {addRepositories(names); page = $Page.listing}"
 			@cancel="page = $Page.listing"
 		/>
-		<div class="global-controls">
+		<div v-if="page === $Page.listing" class="global-controls">
 			<button class="global-button fa fa-wrench" @click="debug = !debug; saveState()"></button>
 			<button class="global-button fa fa-plus" @click="page = $Page.newrepo"></button>
 		</div>
