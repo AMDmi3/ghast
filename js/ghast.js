@@ -279,10 +279,12 @@ const GhastApp = {
 		},
 		addMessage(text, type) {
 			let id = this.nextMessageId++;
-			if (type === 'success') {
-				setTimeout(() => {this.clearMessage(id)}, 2000);
-			} else {
-				setTimeout(() => {this.clearMessage(id)}, 5000);
+			if (!this.debug) {
+				if (type === 'success') {
+					setTimeout(() => {this.clearMessage(id)}, 2000);
+				} else {
+					setTimeout(() => {this.clearMessage(id)}, 5000);
+				}
 			}
 			this.messages.push({text: text, type: type, id: id})
 		},
