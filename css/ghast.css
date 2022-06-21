@@ -85,6 +85,9 @@ button {
 	font-size: 1.5rem;
 	box-shadow: 0 .2rem .4rem #00000028, 0 .2rem .4rem #0000003a;
 }
+@media only screen and (max-width: 1024px) {
+	.global-button { width: 5rem; height: 5rem; }
+}
 
 /* repositories listing */
 .repositories {
