@@ -1,8 +1,14 @@
 # GitHub Actions STatus webapp
 
+<img src="docs/screenshot.png" alt="screenshot" align="right">
+
 This is a simple backendless webapp which shows statuses of GitHub
 action runs for selected repositories, kind of how Travis-CI shows
 its jobs.
+
+The running instances are:
+- [ghast.apps.amdmi3.ru](https://ghast.apps.amdmi3.ru) - stable
+- [dev.ghast.apps.amdmi3.ru](https://devel.ghast.apps.amdmi3.ru) - devel
 
 ## Features
 
