@@ -70,10 +70,10 @@ function getRunStatus(run) {
 function getRepositorySortingKey(repository) {
 	if (repository.status) {
 		if (repository.status.runUpdatedDate) {
-			return repository.status.runUpdateDate;
+			return repository.status.runUpdatedDate.getTime();
 		}
 		if (repository.status.runCreatedDate) {
-			return repository.status.runCreatedDate;
+			return repository.status.runCreatedDate.getTime();
 		}
 	}
 	return 0;
