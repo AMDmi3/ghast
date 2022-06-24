@@ -282,7 +282,7 @@ const GhastApp = {
 	},
 	methods: {
 		addRepositories(names) {
-			names.split(/\s+/).forEach((name) => {
+			names.trim().split(/\s+/).forEach((name) => {
 				if (name in this.repositoriesByName) {
 					this.addMessage('Repository ' + name + ' already exists', 'error');
 				} else {
