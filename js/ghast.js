@@ -115,11 +115,13 @@ function formatDuration(milliseconds) {
 		return Math.floor(seconds) + 's';
 	}
 	let minutes = Math.floor(seconds / 60);
+	seconds = seconds % 60;
 	if (minutes < 60) {
-		return minutes + 'm ' + (seconds - minutes * 60)  + 's';
+		return minutes + 'm ' + seconds + 's';
 	}
 	let hours = Math.floor(minutes / 60);
-	return hours + 'h ' + (minutes - hours * 60) + 'm ' + (seconds - minutes * 60 - hours * 60 * 60)  + 's';
+	minutes = minutes % 60;
+	return hours + 'h ' + minutes + 'm ' + seconds  + 's';
 }
 
 const RepositoryComponent = {
