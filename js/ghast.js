@@ -337,7 +337,7 @@ const GhastApp = {
 			let repository = this.repositoriesByName[name];
 
 			try {
-				repository.lastUpdatedDate = new Date();
+				repository.lastUpdateAttemptDate = new Date();
 
 				let runsData = await fetchGitHubApi('/repos/' + name + '/actions/runs?exclude_pull_requests=1');
 
@@ -367,6 +367,8 @@ const GhastApp = {
 					}
 
 					repository.status = new_status;
+
+					repository.lastUpdatedDate = new Date();
 
 					break;
 				}
@@ -402,7 +404,7 @@ const GhastApp = {
 			// default for repositories not changed recently:
 			// fetch once an hour, add some random to avoid bursts
 			let timeout = 60 * 60 * 1000 * (0.9 + Math.random() * 0.1)
-			if (!repository.lastUpdatedDate) {
+			if (!repository.lastUpdateAttemptDate) {
 				// new repositories: update right away
 				timeout = 0;
 			} else if (repository.status && repository.status.status === Status.inprogress) {
