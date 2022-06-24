@@ -72,6 +72,9 @@ function getRepositorySortingKey(repository) {
 		if (repository.status.runUpdatedDate) {
 			return repository.status.runUpdatedDate.getTime();
 		}
+		if (repository.status.runStartedDate) {
+			return repository.status.runStartedDate.getTime();
+		}
 		if (repository.status.runCreatedDate) {
 			return repository.status.runCreatedDate.getTime();
 		}
