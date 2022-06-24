@@ -232,6 +232,12 @@ const RepositoriesListingComponent = {
 				@update="$emit('update', repository.name)"
 				@remove="$emit('remove', repository.name)"
 			/>
+			<div v-if="debug" class="extra-repositories-panel">
+				<p>Listing of added repositories:</p>
+				<ul>
+					<li v-for="repository in repositories">{{ repository.name }}</li>
+				</ul>
+			</div>
 		</div>
 	`,
 	components: {

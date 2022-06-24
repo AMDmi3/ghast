@@ -230,6 +230,15 @@ input, textarea {
 	text-align: left;
 }
 
+.extra-repositories-panel {
+	border: 1px solid #c0c0c0;
+	box-sizing: border-box;
+	padding: 0.5rem;
+	gap: 0.5rem;
+	box-shadow: 0 .1rem .2rem #0000001e, 0 .1rem .2rem #0000003c;
+	overflow: hidden;
+}
+
 /* messages log */
 .error { background-color: #ffc0c0; }
 .success { background-color: #c0ffc0; }
