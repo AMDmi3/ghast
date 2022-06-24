@@ -201,7 +201,12 @@ const RepositoryComponent = {
 				</div>
 				<div class="repository-details__item">
 					{{ $formatAge(repository.status.runUpdatedDate) }} in
-					{{ $formatDuration(repository.status.runUpdatedDate - repository.status.runCreatedDate) }}
+					{{
+						$formatDuration(
+							repository.status.runUpdatedDate - (repository.status.runStartedDate || repository.status.runCreatedDate)
+						)
+					}}
+
 				</div>
 			</div>
 			<div class="repository-details" v-if="debug">
@@ -341,6 +346,7 @@ const GhastApp = {
 						commitDate: new Date(run.head_commit.timestamp),
 						commitAuthor: run.head_commit.author.name,
 						runCreatedDate: new Date(run.created_at),
+						runStartedDate: new Date(run.run_started_at),
 						runUpdatedDate: new Date(run.updated_at),
 						runId: run.id,
 						runNumber: run.run_number,
