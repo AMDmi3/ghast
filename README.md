@@ -41,4 +41,4 @@ HTTP server at it.
 
 ## License
 
-GPLv3 or later, see [COPYING](COPYING).
+GPLv3 or later, see [LICENSE](LICENSE).
