@@ -414,7 +414,7 @@ const GhastApp = {
 			} else if (repository.status && repository.status.status === Status.inprogress) {
 				// building repositories: update every minute
 				timeout = 60 * 1000;
-			} else if (repository.status && repository.status.runUpdatedDate && new Date() - repository.status.runUpdatedDate < 24 * 60 * 60 * 1000) {
+			} else if (repository.status && repository.status.runUpdatedDate && new Date() - repository.status.runUpdatedDate < 7 * 24 * 60 * 60 * 1000) {
 				// repositories changed recently: update every 5 minutes
 				timeout = 5 * 60 * 1000;
 			}
