@@ -250,7 +250,7 @@ const NewRepositoryFormComponent = {
 		return {
 			form: {
 				names: '',
-			}
+			},
 		};
 	},
 	emits: ['add', 'cancel'],
@@ -287,7 +287,7 @@ const GhastApp = {
 					this.addMessage('Repository ' + name + ' already exists', 'error');
 				} else {
 					const repository = {
-						name: name
+						name: name,
 					};
 					this.repositories.push(repository);
 					this.repositoriesByName[repository.name] = repository;
@@ -420,14 +420,11 @@ const GhastApp = {
 				timeout = Math.max(timeout - alreadyPassed, 0);
 			}
 
-			repository.timer = setTimeout(
-				() => {
-					this.updateRepository(repository.name);
-				},
-				timeout
-			);
+			repository.timer = setTimeout(() => {
+				this.updateRepository(repository.name);
+			}, timeout);
 			repository.nextUpdateDate = new Date(Date.now() + timeout);
-		}
+		},
 	},
 	beforeMount() {
 		this.debug = localStorage.getItem('debug') === 'true';
@@ -488,7 +485,7 @@ const GhastApp = {
 	`,
 };
 
-app = Vue.createApp(GhastApp);
+const app = Vue.createApp(GhastApp);
 app.config.globalProperties.$Page = Page;
 app.config.globalProperties.$Status = Status;
 app.config.globalProperties.$formatAge = formatAge;
