@@ -36,7 +36,7 @@ const LogComponent = {
 function reviver(key, value) {
 	const dateRe = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).*/;
 
-	if (typeof(value) === 'string' && dateRe.exec(value)) {
+	if (typeof value === 'string' && dateRe.exec(value)) {
 		return new Date(value);
 	}
 
@@ -124,7 +124,7 @@ function formatDuration(milliseconds) {
 	}
 	const hours = Math.floor(minutes / 60);
 	minutes = minutes % 60;
-	return hours + 'h ' + minutes + 'm ' + seconds  + 's';
+	return hours + 'h ' + minutes + 'm ' + seconds + 's';
 }
 
 const RepositoryComponent = {
@@ -287,7 +287,7 @@ const GhastApp = {
 					this.addMessage('Repository ' + name + ' already exists', 'error');
 				} else {
 					const repository = {
-						name: name,
+						name,
 					};
 					this.repositories.push(repository);
 					this.repositoriesByName[repository.name] = repository;
@@ -301,16 +301,16 @@ const GhastApp = {
 			const id = this.nextMessageId++;
 			if (!this.debug) {
 				if (type === 'success') {
-					setTimeout(() => {this.clearMessage(id);}, 2000);
+					setTimeout(() => { this.clearMessage(id); }, 2000);
 				} else {
-					setTimeout(() => {this.clearMessage(id);}, 5000);
+					setTimeout(() => { this.clearMessage(id); }, 5000);
 				}
 			}
-			this.messages.push({text: text, type: type, id: id});
+			this.messages.push({ text, type, id });
 		},
 		clearMessage(id) {
 			for (const idx in this.messages) {
-				if (this.messages[idx].id == id) {
+				if (this.messages[idx].id === id) {
 					this.messages.splice(idx, 1);
 				}
 			}
@@ -321,7 +321,7 @@ const GhastApp = {
 		},
 		removeRepository(name) {
 			for (const idx in this.repositories) {
-				if (this.repositories[idx].name == name) {
+				if (this.repositories[idx].name === name) {
 					this.repositories.splice(idx, 1);
 					delete this.repositoriesByName[name];
 					this.saveState();
@@ -432,7 +432,7 @@ const GhastApp = {
 		let hadErrors = false;
 		try {
 			const repositoriesJson = localStorage.getItem('repositories');
-			if (typeof(repositoriesJson) !== 'string') {
+			if (typeof repositoriesJson !== 'string') {
 				return;
 			}
 			const repositories = JSON.parse(repositoriesJson, reviver);
