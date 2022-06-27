@@ -151,8 +151,8 @@ const RepositoryComponent = {
 	watch: {
 		repository: {
 			handler(newRepository, oldRepository) {
-				const oldUpdateDate = oldRepository.status['runUpdatedDate'] ;
-				const newUpdateDate = newRepository.status['runUpdatedDate'] ;
+				const oldUpdateDate = oldRepository.status ? oldRepository.status.runUpdatedDate : undefined;
+				const newUpdateDate = newRepository.status ? newRepository.status.runUpdatedDate : undefined;
 
 				if (oldUpdateDate !== newUpdateDate) {
 					this.flash = true;
