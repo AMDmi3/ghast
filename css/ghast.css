@@ -162,6 +162,22 @@ input, textarea {
 	border-left: 10px solid #edde3f;
 }
 
+.repository_flash-success {
+	background-color: #39aa56;
+	animation: repository_flash 1.0s;
+}
+.repository_flash-failure {
+	background-color: #db4545;
+	animation: repository_flash 1.0s;
+}
+.repository_flash-inprogress {
+	background-color: #edde3f;
+	animation: repository_flash 1.0s;
+}
+@keyframes repository_flash {
+	to { background-color: transparent; }
+}
+
 .repository__header {
 	display: flex;
 	justify-content: space-between;

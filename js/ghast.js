@@ -131,6 +131,7 @@ const RepositoryComponent = {
 	data() {
 		return {
 			confirmRemove: false,
+			flash: false,
 		};
 	},
 	emits: ['update', 'remove'],
@@ -147,6 +148,22 @@ const RepositoryComponent = {
 		},
 	},
 	props: ['repository', 'debug'],
+	watch: {
+		repository: {
+			handler(newRepository, oldRepository) {
+				const oldUpdateDate = oldRepository.status['runUpdatedDate'] ;
+				const newUpdateDate = newRepository.status['runUpdatedDate'] ;
+
+				if (oldUpdateDate !== newUpdateDate) {
+					this.flash = true;
+					setTimeout(() => {
+						this.flash = false;
+					}, 1000)
+				}
+			},
+			deep: true,
+		},
+	},
 	template: `
 		<div
 			class="repository"
@@ -154,6 +171,9 @@ const RepositoryComponent = {
 				repository_success: repository.status && repository.status.status === $Status.success,
 				repository_failure: repository.status && repository.status.status === $Status.failure,
 				repository_inprogress: repository.status && repository.status.status === $Status.inprogress,
+				'repository_flash-success': flash && repository.status && repository.status.status === $Status.success,
+				'repository_flash-failure': flash && repository.status && repository.status.status === $Status.failure,
+				'repository_flash-inprogress': flash && repository.status && repository.status.status === $Status.inprogress,
 			}"
 		>
 			<div class="repository__header">
