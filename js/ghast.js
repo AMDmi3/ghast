@@ -132,6 +132,7 @@ const RepositoryComponent = {
 		return {
 			confirmRemove: false,
 			flash: false,
+			prevUpdatedTs: this.repository.status ? this.repository.status.runUpdatedDate.getTime() : 0,
 		};
 	},
 	emits: ['update', 'remove'],
@@ -149,19 +150,15 @@ const RepositoryComponent = {
 	},
 	props: ['repository', 'debug'],
 	watch: {
-		repository: {
-			handler(newRepository, oldRepository) {
-				const oldUpdateDate = oldRepository.status ? oldRepository.status.runUpdatedDate : undefined;
-				const newUpdateDate = newRepository.status ? newRepository.status.runUpdatedDate : undefined;
-
-				if (oldUpdateDate !== newUpdateDate) {
-					this.flash = true;
-					setTimeout(() => {
-						this.flash = false;
-					}, 1000)
-				}
-			},
-			deep: true,
+		'repository.status.runUpdatedDate'(value) {
+			const newUpdatedTs = value ? value.getTime() : 0;
+			if (newUpdatedTs !== this.prevUpdatedTs) {
+				this.flash = true;
+				setTimeout(() => {
+					this.flash = false;
+				}, 1000);
+				this.prevUpdatedTs = newUpdatedTs;
+			}
 		},
 	},
 	template: `
