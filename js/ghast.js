@@ -131,7 +131,7 @@ const RepositoryComponent = {
 	data() {
 		return {
 			confirmRemove: false,
-		}
+		};
 	},
 	emits: ['update', 'remove'],
 	methods: {
@@ -251,7 +251,7 @@ const NewRepositoryFormComponent = {
 			form: {
 				names: '',
 			}
-		}
+		};
 	},
 	emits: ['add', 'cancel'],
 	template: `
@@ -273,7 +273,7 @@ const GhastApp = {
 			repositories: [],
 			repositoriesByName: {},
 			debug: false,
-		}
+		};
 	},
 	components: {
 		RepositoriesListing: RepositoriesListingComponent,
@@ -288,7 +288,7 @@ const GhastApp = {
 				} else {
 					const repository = {
 						name: name
-					}
+					};
 					this.repositories.push(repository);
 					this.repositoriesByName[repository.name] = repository;
 					this.scheduleNextRepositoryUpdate(repository);
@@ -301,12 +301,12 @@ const GhastApp = {
 			const id = this.nextMessageId++;
 			if (!this.debug) {
 				if (type === 'success') {
-					setTimeout(() => {this.clearMessage(id)}, 2000);
+					setTimeout(() => {this.clearMessage(id);}, 2000);
 				} else {
-					setTimeout(() => {this.clearMessage(id)}, 5000);
+					setTimeout(() => {this.clearMessage(id);}, 5000);
 				}
 			}
-			this.messages.push({text: text, type: type, id: id})
+			this.messages.push({text: text, type: type, id: id});
 		},
 		clearMessage(id) {
 			for (const idx in this.messages) {
@@ -317,7 +317,7 @@ const GhastApp = {
 		},
 		saveState() {
 			localStorage.setItem('repositories', JSON.stringify(this.repositories));
-			localStorage.setItem('debug', this.debug)
+			localStorage.setItem('debug', this.debug);
 		},
 		removeRepository(name) {
 			for (const idx in this.repositories) {
@@ -389,7 +389,7 @@ const GhastApp = {
 				} else {
 					return 0;
 				}
-			})
+			});
 
 			this.saveState();
 		},
@@ -403,7 +403,7 @@ const GhastApp = {
 
 			// default for repositories not changed recently:
 			// fetch once an hour, add some random to avoid bursts
-			let timeout = 60 * 60 * 1000 * (0.9 + Math.random() * 0.1)
+			let timeout = 60 * 60 * 1000 * (0.9 + Math.random() * 0.1);
 			if (!repository.lastUpdateAttemptDate) {
 				// new repositories: update right away
 				timeout = 0;
@@ -416,8 +416,8 @@ const GhastApp = {
 			}
 
 			if (repository.lastUpdatedDate) {
-				const alreadyPassed = new Date() - repository.lastUpdatedDate
-				timeout = Math.max(timeout - alreadyPassed, 0)
+				const alreadyPassed = new Date() - repository.lastUpdatedDate;
+				timeout = Math.max(timeout - alreadyPassed, 0);
 			}
 
 			repository.timer = setTimeout(
@@ -486,7 +486,7 @@ const GhastApp = {
 			<button class="global-button fa fa-plus" @click="page = $Page.newrepo"></button>
 		</div>
 	`,
-}
+};
 
 app = Vue.createApp(GhastApp);
 app.config.globalProperties.$Page = Page;
