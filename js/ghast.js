@@ -1,15 +1,15 @@
 'use strict';
 
 const Page = {
-	'listing': 0,
-	'addrepo': 1,
+	listing: 0,
+	addrepo: 1,
 };
 
 const Status = {
-	'unknown': 0,
-	'success': 1,
-	'failed': 2,
-	'inprogress': 3,
+	unknown: 0,
+	success: 1,
+	failed: 2,
+	inprogress: 3,
 };
 
 const LogComponent = {
@@ -34,7 +34,7 @@ const LogComponent = {
 };
 
 function reviver(key, value) {
-	let dateRe = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).*/;
+	const dateRe = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).*/;
 
 	if (typeof(value) === 'string' && dateRe.exec(value)) {
 		return new Date(value);
@@ -44,8 +44,8 @@ function reviver(key, value) {
 }
 
 async function fetchGitHubApi(path) {
-	let api = 'https://api.github.com';
-	let response = await fetch(api + path);
+	const api = 'https://api.github.com';
+	const response = await fetch(api + path);
 	if (!response.ok) {
 		throw new Error('HTTP error ' + response.status);
 	}
@@ -83,9 +83,9 @@ function getRepositorySortingKey(repository) {
 }
 
 function formatAge(date) {
-	let age = new Date() - new Date(date);
+	const age = new Date() - new Date(date);
 
-	let minutes = age / 1000 / 60;
+	const minutes = age / 1000 / 60;
 	if (minutes < 1) {
 		return 'just now';
 	} else if (minutes < 2) {
@@ -93,19 +93,19 @@ function formatAge(date) {
 	} else if (minutes < 60) {
 		return Math.floor(minutes) + ' min ago';
 	}
-	let hours = minutes / 60;
+	const hours = minutes / 60;
 	if (hours < 2) {
 		return 'an hour ago';
 	} else if (hours < 24) {
 		return Math.floor(hours) + ' hrs ago';
 	}
-	let days = hours / 24
+	const days = hours / 24;
 	if (days < 2) {
 		return 'a day ago';
 	} else if (days < 365) {
 		return Math.floor(days) + ' days ago';
 	}
-	let years = days / 365
+	const years = days / 365;
 	if (years < 2) {
 		return 'a year ago';
 	} 
@@ -122,7 +122,7 @@ function formatDuration(milliseconds) {
 	if (minutes < 60) {
 		return minutes + 'm ' + seconds + 's';
 	}
-	let hours = Math.floor(minutes / 60);
+	const hours = Math.floor(minutes / 60);
 	minutes = minutes % 60;
 	return hours + 'h ' + minutes + 'm ' + seconds  + 's';
 }
@@ -286,7 +286,7 @@ const GhastApp = {
 				if (name in this.repositoriesByName) {
 					this.addMessage('Repository ' + name + ' already exists', 'error');
 				} else {
-					let repository = {
+					const repository = {
 						name: name
 					}
 					this.repositories.push(repository);
@@ -298,7 +298,7 @@ const GhastApp = {
 			});
 		},
 		addMessage(text, type) {
-			let id = this.nextMessageId++;
+			const id = this.nextMessageId++;
 			if (!this.debug) {
 				if (type === 'success') {
 					setTimeout(() => {this.clearMessage(id)}, 2000);
@@ -309,7 +309,7 @@ const GhastApp = {
 			this.messages.push({text: text, type: type, id: id})
 		},
 		clearMessage(id) {
-			for (var idx in this.messages) {
+			for (const idx in this.messages) {
 				if (this.messages[idx].id == id) {
 					this.messages.splice(idx, 1);
 				}
@@ -320,7 +320,7 @@ const GhastApp = {
 			localStorage.setItem('debug', this.debug)
 		},
 		removeRepository(name) {
-			for (var idx in this.repositories) {
+			for (const idx in this.repositories) {
 				if (this.repositories[idx].name == name) {
 					this.repositories.splice(idx, 1);
 					delete this.repositoriesByName[name];
@@ -334,21 +334,21 @@ const GhastApp = {
 				return;
 			}
 
-			let repository = this.repositoriesByName[name];
+			const repository = this.repositoriesByName[name];
 
 			try {
 				repository.lastUpdateAttemptDate = new Date();
 
-				let runsData = await fetchGitHubApi('/repos/' + name + '/actions/runs?exclude_pull_requests=1');
+				const runsData = await fetchGitHubApi('/repos/' + name + '/actions/runs?exclude_pull_requests=1');
 
-				for (let runIdx in runsData.workflow_runs) {
-					let run = runsData.workflow_runs[runIdx];
+				for (const runIdx in runsData.workflow_runs) {
+					const run = runsData.workflow_runs[runIdx];
 
 					if (run.event !== 'push') {
 						continue;
 					}
 
-					let new_status = {
+					const newStatus = {
 						branch: run.head_branch,
 						commitHash: run.head_commit.id,
 						commitMessage: run.head_commit.message.split('\n')[0],
@@ -363,10 +363,10 @@ const GhastApp = {
 					};
 
 					if (run.actor.type === 'User') {
-						new_status.user = run.actor.login;
+						newStatus.user = run.actor.login;
 					}
 
-					repository.status = new_status;
+					repository.status = newStatus;
 
 					repository.lastUpdatedDate = new Date();
 
@@ -379,8 +379,8 @@ const GhastApp = {
 			this.scheduleNextRepositoryUpdate(repository);
 
 			this.repositories.sort((a, b) => {
-				let keyA = getRepositorySortingKey(a);
-				let keyB = getRepositorySortingKey(b);
+				const keyA = getRepositorySortingKey(a);
+				const keyB = getRepositorySortingKey(b);
 				
 				if (keyA < keyB) {
 					return 1;
@@ -410,13 +410,13 @@ const GhastApp = {
 			} else if (repository.status && repository.status.status === Status.inprogress) {
 				// building repositories: update every minute
 				timeout = 60 * 1000;
-			} else if (repository.status && repository.status.runUpdatedDate && new Date - repository.status.runUpdatedDate < 24 * 60 * 60 * 1000) {
+			} else if (repository.status && repository.status.runUpdatedDate && new Date() - repository.status.runUpdatedDate < 24 * 60 * 60 * 1000) {
 				// repositories changed recently: update every 5 minutes
 				timeout = 5 * 60 * 1000;
 			}
 
 			if (repository.lastUpdatedDate) {
-				let alreadyPassed = new Date() - repository.lastUpdatedDate
+				const alreadyPassed = new Date() - repository.lastUpdatedDate
 				timeout = Math.max(timeout - alreadyPassed, 0)
 			}
 
@@ -434,11 +434,11 @@ const GhastApp = {
 
 		let hadErrors = false;
 		try {
-			let repositoriesJson = localStorage.getItem('repositories');
+			const repositoriesJson = localStorage.getItem('repositories');
 			if (typeof(repositoriesJson) !== 'string') {
 				return;
 			}
-			let repositories = JSON.parse(repositoriesJson, reviver);
+			const repositories = JSON.parse(repositoriesJson, reviver);
 			repositories.forEach((repository) => {
 				if ('name' in repository) {
 					repository.timer = undefined;
