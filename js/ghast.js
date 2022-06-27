@@ -485,7 +485,7 @@ const GhastApp = {
 	`,
 };
 
-const app = Vue.createApp(GhastApp);
+const app = Vue.createApp(GhastApp); // eslint-disable-line no-undef
 app.config.globalProperties.$Page = Page;
 app.config.globalProperties.$Status = Status;
 app.config.globalProperties.$formatAge = formatAge;
