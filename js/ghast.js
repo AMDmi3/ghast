@@ -415,6 +415,11 @@ const GhastApp = {
 				timeout = 5 * 60 * 1000;
 			}
 
+			if (repository.lastUpdatedDate) {
+				let alreadyPassed = new Date() - repository.lastUpdatedDate
+				timeout = Math.max(timeout - alreadyPassed, 0)
+			}
+
 			repository.timer = setTimeout(
 				() => {
 					this.updateRepository(repository.name);
