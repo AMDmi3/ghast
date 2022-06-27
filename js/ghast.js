@@ -108,7 +108,7 @@ function formatAge(date) {
 	const years = days / 365;
 	if (years < 2) {
 		return 'a year ago';
-	} 
+	}
 	return Math.floor(years) + ' years ago';
 }
 
@@ -381,7 +381,7 @@ const GhastApp = {
 			this.repositories.sort((a, b) => {
 				const keyA = getRepositorySortingKey(a);
 				const keyB = getRepositorySortingKey(b);
-				
+
 				if (keyA < keyB) {
 					return 1;
 				} if (keyA > keyB) {
