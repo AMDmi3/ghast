@@ -310,7 +310,7 @@ const GhastApp = {
 					}, 5000);
 				}
 			}
-			this.messages.push({ text, type, id });
+			this.messages.push({text, type, id});
 		},
 		clearMessage(id) {
 			for (const idx in this.messages) {
